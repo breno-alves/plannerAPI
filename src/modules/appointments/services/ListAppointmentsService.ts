@@ -1,12 +1,13 @@
-import { injectable, inject } from 'tsyringe';
-import ISchedulesRepository from '@modules/schedules/repositories/ISchedulesRepository';
+import { inject, injectable } from 'tsyringe';
+
 import AppError from '@shared/errors/AppError';
-import ICreateAppointmentDTO from '../dtos/ICreateAppointmentDTO';
+
+import ISchedulesRepository from '@modules/schedules/repositories/ISchedulesRepository';
 import Appointment from '../infra/typeorm/entities/Appointment';
 import IAppointmentsRepository from '../repositories/IAppointmentsRepository';
 
 @injectable()
-class CreateAppointmentService {
+class ListAppointmentsService {
   constructor(
     @inject('AppointmentsRepository')
     private appointmentsRepository: IAppointmentsRepository,
@@ -17,29 +18,21 @@ class CreateAppointmentService {
     this.schedulesRepository = schedulesRepository;
   }
 
-  public async execute({
-    name,
-    scheduleId,
-    userId,
-    weekDay,
-  }: ICreateAppointmentDTO): Promise<Appointment> {
+  public async execute(scheduleId: string): Promise<Appointment[] | []> {
     const checkScheduleExists = await this.schedulesRepository.findById(
       scheduleId,
     );
+
+    console.log(checkScheduleExists);
 
     if (!checkScheduleExists) {
       throw new AppError('Schedule not found!');
     }
 
-    const appointment = await this.appointmentsRepository.create({
-      name,
-      scheduleId,
-      userId,
-      weekDay,
-    });
+    const appointments = await this.appointmentsRepository.findAll(scheduleId);
 
-    return appointment;
+    return appointments;
   }
 }
 
-export default CreateAppointmentService;
+export default ListAppointmentsService;

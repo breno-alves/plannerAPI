@@ -14,6 +14,14 @@ class AppointmentsRepository implements IAppointmentsRepository {
     return this.appointmentsRepository.findOne(id);
   }
 
+  public async findAll(scheduleId: string): Promise<Appointment[] | []> {
+    return this.appointmentsRepository.find({
+      where: {
+        scheduleId,
+      },
+    });
+  }
+
   public async create(data: ICreateAppointmentDTO): Promise<Appointment> {
     const appointment = this.appointmentsRepository.create(data);
     await this.appointmentsRepository.save(appointment);
