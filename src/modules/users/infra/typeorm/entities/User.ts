@@ -1,5 +1,4 @@
 import Schedule from '@modules/schedules/infra/typeorm/entities/Schedule';
-
 import {
   Entity,
   Column,

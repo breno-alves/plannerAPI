@@ -5,6 +5,7 @@ import AppError from '@shared/errors/AppError';
 import User from '@modules/users/infra/typeorm/entities/User';
 
 import IUserRepository from '@modules/users/repositories/IUsersRepository';
+import ISchedulesRepository from '@modules/schedules/repositories/ISchedulesRepository';
 import IHashProvider from '../providers/HashProvider/models/IHashProvider';
 
 interface IRequestDTO {
@@ -15,18 +16,17 @@ interface IRequestDTO {
 
 @injectable()
 class CreateUserService {
-  private usersRepository: IUserRepository;
-
-  private hashProvider: IHashProvider;
-
   constructor(
     @inject('UsersRepository')
-    usersRepository: IUserRepository,
+    private usersRepository: IUserRepository,
     @inject('HashProvider')
-    hashProvider: IHashProvider,
+    private hashProvider: IHashProvider,
+    @inject('SchedulesRepository')
+    private schedulesRepository: ISchedulesRepository,
   ) {
     this.usersRepository = usersRepository;
     this.hashProvider = hashProvider;
+    this.schedulesRepository = schedulesRepository;
   }
 
   public async execute({ name, email, password }: IRequestDTO): Promise<User> {
@@ -43,6 +43,10 @@ class CreateUserService {
       email,
       password: hashedPassword,
     });
+
+    const schedule = await this.schedulesRepository.create({ userId: user.id });
+    user.scheduleId = schedule.id;
+    await this.usersRepository.save(user);
 
     return user;
   }
