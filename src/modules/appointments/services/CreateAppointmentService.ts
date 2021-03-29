@@ -22,6 +22,7 @@ class CreateAppointmentService {
     scheduleId,
     userId,
     weekDay,
+    duration,
   }: ICreateAppointmentDTO): Promise<Appointment> {
     const checkScheduleExists = await this.schedulesRepository.findById(
       scheduleId,
@@ -36,6 +37,7 @@ class CreateAppointmentService {
       scheduleId,
       userId,
       weekDay,
+      duration,
     });
 
     return appointment;

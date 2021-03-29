@@ -6,7 +6,7 @@ import { container } from 'tsyringe';
 
 class AppointmentsController {
   public async create(request: Request, response: Response): Promise<Response> {
-    const { scheduleId, name, weekDay, userId } = request.body;
+    const { scheduleId, name, weekDay, userId, duration } = request.body;
 
     const createAppointment = container.resolve(CreateAppointmentService);
 
@@ -15,6 +15,7 @@ class AppointmentsController {
       name,
       weekDay,
       userId,
+      duration,
     });
 
     return response.json(appointment);

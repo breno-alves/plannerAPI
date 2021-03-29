@@ -3,4 +3,5 @@ export default interface ICreateAppointmentDTO {
   scheduleId: string;
   userId: string;
   weekDay: number;
+  duration?: number;
 }

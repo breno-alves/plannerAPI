@@ -24,6 +24,9 @@ class Appointment {
   @Column({ name: 'week_day' })
   weekDay: number;
 
+  @Column({ default: 0 })
+  duration: number;
+
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
 
