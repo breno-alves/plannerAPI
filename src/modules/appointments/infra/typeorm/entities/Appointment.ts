@@ -3,29 +3,26 @@ import Schedule from '@modules/schedules/infra/typeorm/entities/Schedule';
 import {
   Entity,
   Column,
+  PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  PrimaryGeneratedColumn,
-  OneToOne,
+  ManyToOne,
   JoinColumn,
 } from 'typeorm';
 
-@Entity('users')
-class User {
+@Entity('appointments')
+class Appointment {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ unique: true })
-  email: string;
+  @Column({ name: 'schedule_id' })
+  scheduleId: string;
 
   @Column()
   name: string;
 
-  @Column()
-  password: string;
-
-  @Column({ name: 'schedule_id', nullable: true })
-  scheduleId: string;
+  @Column({ name: 'week_day' })
+  weekDay: number;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
@@ -33,9 +30,9 @@ class User {
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
 
-  @OneToOne(() => Schedule)
+  @ManyToOne(() => Schedule, schedule => schedule.appointments)
   @JoinColumn({ name: 'schedule_id' })
   schedule: Schedule;
 }
 
-export default User;
+export default Appointment;
