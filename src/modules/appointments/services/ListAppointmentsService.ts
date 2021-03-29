@@ -23,8 +23,6 @@ class ListAppointmentsService {
       scheduleId,
     );
 
-    console.log(checkScheduleExists);
-
     if (!checkScheduleExists) {
       throw new AppError('Schedule not found!');
     }
