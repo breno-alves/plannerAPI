@@ -5,7 +5,9 @@
   "license": "MIT",
   "scripts": {
     "dev:server": "ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules ./src/shared/infra/http/app.ts",
-    "typeorm": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli.js"
+    "typeorm": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
+    "build": "tsc --project tsconfig.json && tscpaths -p tsconfig.json -s ./src -o ./dist",
+    "start": "node -r tsconfig-paths/register -r ts-node ./dist/shared/infra/http/app.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -16,6 +18,7 @@
     "jsonwebtoken": "^8.5.1",
     "pg": "^8.5.1",
     "reflect-metadata": "^0.1.13",
+    "tscpaths": "^0.0.9",
     "tsyringe": "^4.4.0",
     "typeorm": "^0.2.31",
     "uuidv4": "^6.2.6"
