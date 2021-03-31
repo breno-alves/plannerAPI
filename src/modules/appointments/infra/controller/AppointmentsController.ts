@@ -33,14 +33,14 @@ class AppointmentsController {
   }
 
   public async delete(request: Request, response: Response): Promise<Response> {
-    const { appointmentId, scheduleId, userId } = request.body;
+    const { appointmentId } = request.params;
+    const { user } = request;
 
     const deleteAppointment = container.resolve(DeleteAppointmentService);
 
     const deleted = await deleteAppointment.execute({
       appointmentId,
-      scheduleId,
-      userId,
+      userId: user.id,
     });
 
     return response.json(deleted);

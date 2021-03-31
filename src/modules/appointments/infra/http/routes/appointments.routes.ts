@@ -15,7 +15,7 @@ appointmentRouter.get(
 );
 
 appointmentRouter.delete(
-  '/',
+  '/:appointmentId',
   ensureAuthenticated,
   appointmentController.delete,
 );
