@@ -31,6 +31,10 @@ class AppointmentsRepository implements IAppointmentsRepository {
   public async save(appointment: Appointment): Promise<Appointment> {
     return this.appointmentsRepository.save(appointment);
   }
+
+  public async delete(appointmentId: string): Promise<void> {
+    await this.appointmentsRepository.delete(appointmentId);
+  }
 }
 
 export default AppointmentsRepository;

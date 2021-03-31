@@ -6,4 +6,5 @@ export default interface IAppointmentsRepository {
   findById(id: string): Promise<Appointment | undefined>;
   findAll(scheduleId: string): Promise<Appointment[] | []>;
   save(appointment: Appointment): Promise<Appointment>;
+  delete(appointmentId: string): Promise<void>;
 }

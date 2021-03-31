@@ -1,5 +1,6 @@
 import CreateAppointmentService from '@modules/appointments/services/CreateAppointmentService';
 import ListAppointmentsService from '@modules/appointments/services/ListAppointmentsService';
+import DeleteAppointmentService from '@modules/appointments/services/DeleteAppointmentService';
 
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
@@ -29,6 +30,20 @@ class AppointmentsController {
     const appointments = await listAppointments.execute(scheduleId);
 
     return response.json(appointments);
+  }
+
+  public async delete(request: Request, response: Response): Promise<Response> {
+    const { appointmentId, scheduleId, userId } = request.body;
+
+    const deleteAppointment = container.resolve(DeleteAppointmentService);
+
+    const deleted = await deleteAppointment.execute({
+      appointmentId,
+      scheduleId,
+      userId,
+    });
+
+    return response.json(deleted);
   }
 }
 
