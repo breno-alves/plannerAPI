@@ -10,7 +10,7 @@
     "dev:server": "ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules ./src/shared/infra/http/app.ts",
     "typeorm": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
     "build": "tsc --project tsconfig.json && tscpaths -p tsconfig.json -s ./src -o ./dist",
-    "start": "npm run typeorm:migration run && node -r tsconfig-paths/register -r ts-node ./dist/shared/infra/http/app.js"
+    "start": "npm run typeorm migration:run && node -r tsconfig-paths/register -r ts-node ./dist/shared/infra/http/app.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
